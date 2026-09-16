@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="none">
+  <defs>
+    <linearGradient id="psrFavGrad" x1="40" y1="40" x2="472" y2="472" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#059669" />
+      <stop offset="100%" stop-color="#0f766e" />
+    </linearGradient>
+    <linearGradient id="goldFavGrad" x1="160" y1="120" x2="380" y2="380" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#34d399" />
+      <stop offset="100%" stop-color="#10b981" />
+    </linearGradient>
+  </defs>
+  <rect x="36" y="36" width="440" height="440" rx="108" fill="url(#psrFavGrad)" />
+  <path d="M164 136C150.745 136 140 146.745 140 160V352C140 365.255 150.745 376 164 376H192C205.255 376 216 365.255 216 352V160C216 146.745 205.255 136 192 136H164Z" fill="#ffffff" />
+  <path d="M216 136H280C333.019 136 376 178.981 376 232C376 285.019 333.019 328 280 328H216V272H280C302.091 272 320 254.091 320 232C320 209.909 302.091 192 280 192H216V136Z" fill="url(#goldFavGrad)" />
+  <path d="M256 312L294 350L382 258" stroke="#ffffff" stroke-width="40" stroke-linecap="round" stroke-linejoin="round" />
+</svg>

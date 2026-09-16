@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="none">
+  <defs>
+    <linearGradient id="psrGrad" x1="40" y1="40" x2="472" y2="472" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#059669" />
+      <stop offset="50%" stop-color="#047857" />
+      <stop offset="100%" stop-color="#0f766e" />
+    </linearGradient>
+    <linearGradient id="goldGrad" x1="160" y1="120" x2="380" y2="380" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#34d399" />
+      <stop offset="100%" stop-color="#10b981" />
+    </linearGradient>
+    <linearGradient id="checkGrad" x1="200" y1="200" x2="400" y2="400" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#ffffff" />
+      <stop offset="100%" stop-color="#ecfdf5" />
+    </linearGradient>
+    <filter id="softGlow" x="-20%" y="-20%" width="140%" height="140%" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="8" stdDeviation="16" flood-color="#047857" flood-opacity="0.25" />
+    </filter>
+  </defs>
+
+  <!-- Modern Geometric Hexa-Shield Container -->
+  <rect x="36" y="36" width="440" height="440" rx="108" fill="url(#psrGrad)" filter="url(#softGlow)" />
+  
+  <!-- Subtle Internal Architectural Grid / Seal Ring -->
+  <rect x="56" y="56" width="400" height="400" rx="88" stroke="#34d399" stroke-width="3" stroke-opacity="0.35" stroke-dasharray="8 8" fill="none" />
+
+  <!-- Stylized "P" & Document Ribbon in Crisp Negative/Gold Geometry -->
+  <!-- Stem of the P with Bengali ৳ / Document Notch -->
+  <path d="M164 136C150.745 136 140 146.745 140 160V352C140 365.255 150.745 376 164 376H192C205.255 376 216 365.255 216 352V160C216 146.745 205.255 136 192 136H164Z" fill="#ffffff" fill-opacity="0.95" />
+  
+  <!-- Loop of the P with Tax Compliance Loop & Arc -->
+  <path d="M216 136H280C333.019 136 376 178.981 376 232C376 285.019 333.019 328 280 328H216V272H280C302.091 272 320 254.091 320 232C320 209.909 302.091 192 280 192H216V136Z" fill="url(#goldGrad)" />
+  
+  <!-- Official Verified Return Checkmark (The PSR Seal) -->
+  <path d="M256 312L294 350L382 258" stroke="url(#checkGrad)" stroke-width="36" stroke-linecap="round" stroke-linejoin="round" />
+
+  <!-- Security Certification Dot -->
+  <circle cx="280" cy="232" r="14" fill="#ffffff" />
+  <circle cx="392" cy="120" r="18" fill="#34d399" />
+</svg>
