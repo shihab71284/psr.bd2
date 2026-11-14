@@ -5,6 +5,8 @@ import AuditExposureWidget from "@/components/AuditExposureWidget";
 import ReferColleagueSection from "@/components/ReferColleagueSection";
 import DashboardAuditNotifications from "@/components/DashboardAuditNotifications";
 import { getSession } from "@/lib/auth";
+import { getChamberPlan } from "@/lib/subscription";
+import UpgradeBanner from "@/components/UpgradeBanner";
 
 export const dynamic = "force-dynamic";
 
@@ -22,12 +24,13 @@ function daysUntil(d: string) {
 }
 
 export default async function DashboardPage() {
-  const [session, metrics, returns, deadlinesList, activity] = await Promise.all([
+  const [session, metrics, returns, deadlinesList, activity, chamber] = await Promise.all([
     getSession(),
     dashboardMetrics(),
     listAllReturns(),
     listDeadlines(),
     listRecentActivity(8),
+    getChamberPlan(),
   ]);
 
   const upcomingDeadlines = deadlinesList
@@ -78,8 +81,15 @@ export default async function DashboardPage() {
         ))}
       </div>
 
-      {/* Firm-wide Audit Exposure & Compliance Health Widget */}
-      <AuditExposureWidget returnsList={returns} />
+      {/* Firm-wide Audit Exposure & Compliance Health Widget — Pro ফিচার */}
+      {chamber.isPro ? (
+        <AuditExposureWidget returnsList={returns} />
+      ) : (
+        <UpgradeBanner
+          title="ফার্ম-ব্যাপী অডিট এক্সপোজার ও ঝুঁকি তুলনা — Pro ফিচার"
+          message="সব রিটার্নের অডিট এক্সপোজার, ঝুঁকি তুলনা ও কমপ্লায়েন্স হেলথ দেখতে Pro-তে আপগ্রেড করুন।"
+        />
+      )}
 
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
         <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm lg:col-span-2">

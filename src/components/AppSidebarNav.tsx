@@ -19,6 +19,7 @@ const NAV_ITEMS: NavItem[] = [
   { href: "/calculators", label: "ক্যালকুলেটর", icon: "🧮" },
   { href: "/deadlines", label: "সময়সীমা ক্যালেন্ডার", icon: "📅" },
   { href: "/knowledge-base", label: "জ্ঞানভান্ডার", icon: "📚" },
+  { href: "/subscription", label: "সাবস্ক্রিপশন", icon: "👑" },
 ];
 
 export default function AppSidebarNav() {

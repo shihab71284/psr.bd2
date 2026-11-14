@@ -77,6 +77,9 @@ export default function LandingHeader({ onWritePostClick }: LandingHeaderProps) 
           <Link href="/calculators" className="transition-colors hover:text-emerald-700">
             ট্যাক্স ক্যালকুলেটর
           </Link>
+          <Link href="/pricing" className="transition-colors hover:text-emerald-700">
+            মূল্য
+          </Link>
         </nav>
 
         {/* CTA Buttons */}
@@ -156,6 +159,13 @@ export default function LandingHeader({ onWritePostClick }: LandingHeaderProps) 
               className="py-1 text-slate-700 hover:text-emerald-700"
             >
               ট্যাক্স ক্যালকুলেটর
+            </Link>
+            <Link
+              href="/pricing"
+              onClick={() => setMobileMenuOpen(false)}
+              className="py-1 text-slate-700 hover:text-emerald-700"
+            >
+              মূল্য (ফ্রি বনাম Pro)
             </Link>
 
             <div className="pt-3 border-t border-slate-100 flex flex-col gap-2">

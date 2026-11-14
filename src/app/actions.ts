@@ -20,6 +20,12 @@ import { getSession } from "@/lib/auth";
 import { assessAuditRisk, calculateGiftTax, calculateIncomeTax, AuditIssue } from "@/lib/taxEngine";
 import { getLowEffortFixDetails, recalculateAuditScore } from "@/lib/quickFixHelper";
 import { ANNUAL_DEADLINE_TEMPLATES } from "@/lib/content";
+import {
+  assertCanCreateClient,
+  assertCanCreateReturn,
+  assertIsPro,
+  getChamberPlan,
+} from "@/lib/subscription";
 
 async function logActivity(message: string, clientId?: string) {
   const session = await getSession();
@@ -45,6 +51,10 @@ function num(v: FormDataEntryValue | null) {
 }
 
 export async function createClient(formData: FormData) {
+  // Free প্ল্যানে ক্লায়েন্ট সীমা সার্ভার-সাইডে প্রয়োগ করা হয়
+  const plan = await getChamberPlan();
+  assertCanCreateClient(plan);
+
   const code = await nextClientCode();
   const name = str(formData.get("name"));
   const lawyerId = num(formData.get("lawyerId")) || 1;
@@ -315,6 +325,10 @@ function readReturnForm(formData: FormData) {
 }
 
 export async function createTaxReturn(clientId: string, formData: FormData) {
+  // Free প্ল্যানে রিটার্ন সীমা সার্ভার-সাইডে প্রয়োগ করা হয়
+  const plan = await getChamberPlan();
+  assertCanCreateReturn(plan);
+
   const data = readReturnForm(formData);
   const { calculation, audit } = await computeReturnPayload(clientId, data);
 
@@ -432,6 +446,10 @@ export async function updateReturnStatus(returnId: string, clientId: string, sta
 }
 
 export async function bulkApplyQuickFixes(returnId: string, resolvedTitles: string[]) {
+  // Bulk Quick-Fix শুধু Pro প্ল্যানে — সার্ভার-সাইডে প্রয়োগ
+  const plan = await getChamberPlan();
+  assertIsPro(plan, "Bulk Quick-Fix");
+
   const [ret] = await db.select().from(taxReturns).where(eq(taxReturns.id, returnId)).limit(1);
   if (!ret) throw new Error("Return not found");
 
@@ -602,6 +620,10 @@ export async function deleteDeadline(id: string) {
 }
 
 export async function seedAnnualDeadlinesForClient(clientId: string) {
+  // প্রতি-ক্লায়েন্ট ডেডলাইন অটো-সিড শুধু Pro প্ল্যানে — সার্ভার-সাইডে প্রয়োগ
+  const plan = await getChamberPlan();
+  assertIsPro(plan, "প্রতি-ক্লায়েন্ট বার্ষিক ডেডলাইন অটো-সিড");
+
   const now = new Date();
   const year = now.getFullYear();
   const rows = ANNUAL_DEADLINE_TEMPLATES.map((t) => {

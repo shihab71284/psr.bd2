@@ -33,6 +33,8 @@ interface ReturnIssuesFilterListProps {
   returnId?: string;
   initialScore?: number;
   initialLevel?: string;
+  /** Bulk Quick-Fix শুধু Pro প্ল্যানে — false হলে বোতাম লক দেখানো হয় */
+  isPro?: boolean;
 }
 
 const SEVERITY_CONFIG: Record<string, { bn: string; className: string }> = {
@@ -50,6 +52,7 @@ export default function ReturnIssuesFilterList({
   returnId,
   initialScore,
   initialLevel,
+  isPro = false,
 }: ReturnIssuesFilterListProps) {
   const router = useRouter();
   const [issuesList, setIssuesList] = useState<AuditIssue[]>(initialIssues);
@@ -234,9 +237,19 @@ export default function ReturnIssuesFilterList({
           </p>
         </div>
 
-        {/* Action Toolbar: Bulk Apply Quick Fixes Button */}
+        {/* Action Toolbar: Bulk Apply Quick Fixes Button — Pro-only */}
         <div className="flex flex-wrap items-center gap-2.5">
-          {unresolvedLowEffortIssues.length > 0 ? (
+          {!isPro ? (
+            <a
+              href="/pricing"
+              id="btn-bulk-apply-quick-fixes-locked"
+              className="inline-flex items-center gap-2 rounded-xl border border-amber-400 bg-amber-50 px-3.5 py-2 text-xs font-bold text-amber-900 shadow-sm transition-all hover:bg-amber-100"
+              title="Bulk Quick-Fix শুধু Pro প্ল্যানে"
+            >
+              <Zap className="h-4 w-4 text-amber-600" />
+              <span>👑 Bulk Apply Quick Fixes — Pro</span>
+            </a>
+          ) : unresolvedLowEffortIssues.length > 0 ? (
             <button
               type="button"
               id="btn-bulk-apply-quick-fixes"

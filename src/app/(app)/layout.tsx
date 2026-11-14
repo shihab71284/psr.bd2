@@ -1,6 +1,8 @@
 import type { ReactNode } from "react";
 import Link from "next/link";
 import { getSession } from "@/lib/auth";
+import { getChamberPlan } from "@/lib/subscription";
+import { formatDateBn } from "@/lib/plans";
 import LogoutButton from "@/components/LogoutButton";
 import PsrLogo from "@/components/PsrLogo";
 import AppSidebarNav from "@/components/AppSidebarNav";
@@ -8,6 +10,7 @@ import { Globe, Lock, ShieldCheck } from "lucide-react";
 
 export default async function AppLayout({ children }: { children: ReactNode }) {
   const session = await getSession();
+  const chamber = await getChamberPlan();
 
   return (
     <div className="flex min-h-screen bg-slate-50/70 text-slate-900">
@@ -47,7 +50,23 @@ export default async function AppLayout({ children }: { children: ReactNode }) {
                 </p>
                 <p className="truncate text-[10px] text-slate-500">{session?.email}</p>
               </div>
+              <span
+                className={`shrink-0 rounded-full px-2 py-0.5 text-[10px] font-bold ${
+                  chamber.isPro ? "bg-emerald-600 text-white" : "bg-slate-200 text-slate-700"
+                }`}
+                title={chamber.isPro && chamber.currentPeriodEnd ? `মেয়াদ ${formatDateBn(chamber.currentPeriodEnd)} পর্যন্ত` : undefined}
+              >
+                {chamber.isPro ? "Pro" : "Free"}
+              </span>
             </div>
+            {!chamber.isPro && (
+              <Link
+                href="/pricing"
+                className="mt-2 block rounded-lg bg-slate-900 px-3 py-1.5 text-center text-[11px] font-bold text-white transition hover:bg-emerald-700"
+              >
+                Pro-তে আপগ্রেড করুন →
+              </Link>
+            )}
           </div>
           <LogoutButton />
         </div>

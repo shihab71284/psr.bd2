@@ -17,7 +17,7 @@ const CATEGORY_LABELS: Record<string, string> = {
   other: "অন্যান্য",
 };
 
-export default function DeadlinesPanel({ clientId, deadlines }: { clientId: string; deadlines: Deadline[] }) {
+export default function DeadlinesPanel({ clientId, deadlines, isPro = false }: { clientId: string; deadlines: Deadline[]; isPro?: boolean }) {
   const seedAction = seedAnnualDeadlinesForClient.bind(null, clientId);
 
   return (
@@ -25,11 +25,21 @@ export default function DeadlinesPanel({ clientId, deadlines }: { clientId: stri
       <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
         <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
           <h3 className="text-sm font-semibold text-slate-700">নতুন সময়সীমা যুক্ত করুন</h3>
-          <form action={seedAction}>
-            <button className="rounded-lg bg-slate-100 px-3 py-1.5 text-xs font-medium text-slate-700 hover:bg-slate-200">
-              বার্ষিক সময়সীমা টেমপ্লেট প্রয়োগ করুন
-            </button>
-          </form>
+          {isPro ? (
+            <form action={seedAction}>
+              <button className="rounded-lg bg-slate-100 px-3 py-1.5 text-xs font-medium text-slate-700 hover:bg-slate-200">
+                বার্ষিক সময়সীমা টেমপ্লেট প্রয়োগ করুন
+              </button>
+            </form>
+          ) : (
+            <a
+              href="/pricing"
+              className="rounded-lg bg-amber-50 border border-amber-300 px-3 py-1.5 text-xs font-bold text-amber-800 hover:bg-amber-100"
+              title="প্রতি-ক্লায়েন্ট বার্ষিক ডেডলাইন অটো-সিড শুধু Pro প্ল্যানে"
+            >
+              👑 বার্ষিক সময়সীমা টেমপ্লেট — Pro
+            </a>
+          )}
         </div>
         <form action={createDeadline} className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
           <input type="hidden" name="clientId" value={clientId} />

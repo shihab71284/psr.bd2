@@ -22,7 +22,45 @@ export const lawyers = pgTable("lawyers", {
   email: varchar("email", { length: 100 }).unique().notNull(),
   phoneNumber: varchar("phone_number", { length: 15 }).notNull(),
   subscriptionStatus: varchar("subscription_status", { length: 50 }).default("inactive"), // active, inactive, trialling
+  // --- সাবস্ক্রিপশন (Free/Pro) ---
+  plan: varchar("plan", { length: 20 }).default("free"), // free | pro
+  billingCycle: varchar("billing_cycle", { length: 20 }), // monthly | yearly
+  currentPeriodEnd: timestamp("current_period_end", { withTimezone: true }),
+  paymentRef: varchar("payment_ref", { length: 100 }),
   createdAt: timestamp("created_at", { withTimezone: true }).defaultNow(),
+});
+
+// ---------- সাবস্ক্রিপশন (চেম্বার-ভিত্তিক, Free/Pro) ----------
+export const subscriptions = pgTable("subscriptions", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  lawyerId: integer("lawyer_id").references(() => lawyers.id, { onDelete: "cascade" }),
+  userId: uuid("user_id").references(() => users.id, { onDelete: "set null" }),
+  plan: varchar("plan", { length: 20 }).notNull().default("pro"), // free | pro
+  billingCycle: varchar("billing_cycle", { length: 20 }).notNull().default("monthly"), // monthly | yearly
+  status: varchar("status", { length: 20 }).notNull().default("active"), // active | cancelled | expired | pending
+  amountBdt: integer("amount_bdt").notNull(),
+  currency: varchar("currency", { length: 3 }).notNull().default("BDT"),
+  currentPeriodStart: timestamp("current_period_start", { withTimezone: true }).notNull(),
+  currentPeriodEnd: timestamp("current_period_end", { withTimezone: true }).notNull(),
+  paymentMethod: varchar("payment_method", { length: 50 }).notNull(), // bkash | nagad | bangla_qr | bank_card | bank_internet_banking
+  providerTrxId: varchar("provider_trx_id", { length: 100 }),
+  createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+  updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
+});
+
+// ---------- পেমেন্ট রেকর্ড (গেটওয়ে লেনদেনের হিসাব) ----------
+export const payments = pgTable("payments", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  subscriptionId: uuid("subscription_id").references(() => subscriptions.id, { onDelete: "set null" }),
+  userId: uuid("user_id").references(() => users.id, { onDelete: "set null" }),
+  lawyerId: integer("lawyer_id").references(() => lawyers.id, { onDelete: "set null" }),
+  amountBdt: integer("amount_bdt").notNull(),
+  method: varchar("method", { length: 50 }).notNull(), // bkash | nagad | bangla_qr | bank_card | bank_internet_banking
+  provider: varchar("provider", { length: 50 }).notNull(),
+  providerPaymentId: varchar("provider_payment_id", { length: 100 }),
+  providerTrxId: varchar("provider_trx_id", { length: 100 }),
+  status: varchar("status", { length: 20 }).notNull().default("initiated"), // initiated | verified | failed
+  createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
 });
 
 // ---------- Users (Firm staff / System Authentication) ----------

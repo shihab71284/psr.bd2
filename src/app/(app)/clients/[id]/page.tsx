@@ -16,6 +16,8 @@ import DeadlinesPanel from "@/components/DeadlinesPanel";
 import AuditRiskComparison from "@/components/AuditRiskComparison";
 import BankAccountsPanel from "@/components/BankAccountsPanel";
 import GiftRecordsPanel from "@/components/GiftRecordsPanel";
+import { getChamberPlan } from "@/lib/subscription";
+import { FREE_MAX_RETURNS } from "@/lib/plans";
 
 export const dynamic = "force-dynamic";
 
@@ -31,15 +33,17 @@ export default async function ClientDetailPage({
   const client = await getClientById(id);
   if (!client) notFound();
 
-  const [documents, returns, deadlines, bankAccounts, giftRecords] = await Promise.all([
+  const [documents, returns, deadlines, bankAccounts, giftRecords, chamber] = await Promise.all([
     listDocumentsForClient(id),
     listReturnsForClient(id),
     listDeadlinesForClient(id),
     listBankAccountsForClient(id),
     listGiftRecordsForClient(id),
+    getChamberPlan(),
   ]);
 
   const activeDeadlines = deadlines.filter((d) => d.status !== "completed");
+  const returnsAtLimit = !chamber.isPro && chamber.returnCount >= FREE_MAX_RETURNS;
 
   return (
     <div className="space-y-6">
@@ -55,9 +59,15 @@ export default async function ClientDetailPage({
           <Link href={`/clients/${id}/edit`} className="rounded-lg border border-slate-300 px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50">
             সম্পাদনা করুন
           </Link>
-          <Link href={`/clients/${id}/returns/new`} className="rounded-lg bg-emerald-700 px-4 py-2 text-sm font-semibold text-white hover:bg-emerald-800">
-            + নতুন রিটার্ন
-          </Link>
+          {returnsAtLimit ? (
+            <Link href="/pricing" className="rounded-lg bg-slate-900 px-4 py-2 text-sm font-semibold text-white hover:bg-emerald-700">
+              👑 Pro নিন — আরও রিটার্ন
+            </Link>
+          ) : (
+            <Link href={`/clients/${id}/returns/new`} className="rounded-lg bg-emerald-700 px-4 py-2 text-sm font-semibold text-white hover:bg-emerald-800">
+              + নতুন রিটার্ন
+            </Link>
+          )}
         </div>
       </div>
 
@@ -95,7 +105,7 @@ export default async function ClientDetailPage({
             ),
           },
           { id: "documents", label: `ডকুমেন্ট (${documents.length})`, content: <DocumentsPanel clientId={id} documents={documents as never} /> },
-          { id: "deadlines", label: `সময়সীমা (${activeDeadlines.length})`, content: <DeadlinesPanel clientId={id} deadlines={deadlines as never} /> },
+          { id: "deadlines", label: `সময়সীমা (${activeDeadlines.length})`, content: <DeadlinesPanel clientId={id} deadlines={deadlines as never} isPro={chamber.isPro} /> },
         ]}
       />
     </div>

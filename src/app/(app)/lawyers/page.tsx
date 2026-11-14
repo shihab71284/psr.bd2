@@ -1,10 +1,12 @@
 import { listLawyers, listClients } from "@/lib/queries";
 import LawyersTable from "@/components/LawyersTable";
+import UpgradeBanner from "@/components/UpgradeBanner";
+import { getChamberPlan } from "@/lib/subscription";
 
 export const dynamic = "force-dynamic";
 
 export default async function LawyersPage() {
-  const [lawyers, clients] = await Promise.all([listLawyers(), listClients()]);
+  const [lawyers, clients, chamber] = await Promise.all([listLawyers(), listClients(), getChamberPlan()]);
 
   return (
     <div className="space-y-6">
@@ -16,6 +18,14 @@ export default async function LawyersPage() {
           </p>
         </div>
       </div>
+
+      {!chamber.isPro && (
+        <UpgradeBanner
+          title="মাল্টি-ইউজার চেম্বার — Pro ফিচার"
+          message="এক চেম্বারে একাধিক আইনজীবী/স্টাফ (পার্টনার, অ্যাসোসিয়েট, অ্যাসিস্ট্যান্ট) ও তাদের সাবস্ক্রিপশন পরিচালনা Pro প্ল্যানে।"
+          compact
+        />
+      )}
 
       <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
         <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">

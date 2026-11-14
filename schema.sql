@@ -12,8 +12,59 @@ CREATE TABLE IF NOT EXISTS lawyers (
     email VARCHAR(100) UNIQUE NOT NULL,
     phone_number VARCHAR(15) NOT NULL,
     subscription_status VARCHAR(50) DEFAULT 'inactive', -- active, inactive, trialling
+    plan VARCHAR(20) DEFAULT 'free', -- free | pro (সাবস্ক্রিপশন)
+    billing_cycle VARCHAR(20), -- monthly | yearly
+    current_period_end TIMESTAMP WITH TIME ZONE,
+    payment_ref VARCHAR(100),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+-- ১(ক). ব্যবহারকারী (ফার্ম স্টাফ / লগইন)
+CREATE TABLE IF NOT EXISTS users (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    name TEXT NOT NULL,
+    email TEXT NOT NULL UNIQUE,
+    password_hash TEXT NOT NULL,
+    role TEXT NOT NULL DEFAULT 'associate',
+    created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+-- ১(খ). সাবস্ক্রিপশন টেবিল (চেম্বার-ভিত্তিক Free/Pro)
+CREATE TABLE IF NOT EXISTS subscriptions (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    lawyer_id INT REFERENCES lawyers(id) ON DELETE CASCADE,
+    user_id UUID REFERENCES users(id) ON DELETE SET NULL,
+    plan VARCHAR(20) NOT NULL DEFAULT 'pro',
+    billing_cycle VARCHAR(20) NOT NULL DEFAULT 'monthly',
+    status VARCHAR(20) NOT NULL DEFAULT 'active', -- active | cancelled | expired | pending
+    amount_bdt INT NOT NULL,
+    currency VARCHAR(3) NOT NULL DEFAULT 'BDT',
+    current_period_start TIMESTAMP WITH TIME ZONE NOT NULL,
+    current_period_end TIMESTAMP WITH TIME ZONE NOT NULL,
+    payment_method VARCHAR(50) NOT NULL,
+    provider_trx_id VARCHAR(100),
+    created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+CREATE INDEX IF NOT EXISTS idx_subscriptions_lawyer ON subscriptions(lawyer_id);
+CREATE INDEX IF NOT EXISTS idx_subscriptions_user ON subscriptions(user_id);
+
+-- ১(খ). পেমেন্ট রেকর্ড টেবিল (গেটওয়ে লেনদেনের হিসাব)
+CREATE TABLE IF NOT EXISTS payments (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    subscription_id UUID REFERENCES subscriptions(id) ON DELETE SET NULL,
+    user_id UUID REFERENCES users(id) ON DELETE SET NULL,
+    lawyer_id INT REFERENCES lawyers(id) ON DELETE SET NULL,
+    amount_bdt INT NOT NULL,
+    method VARCHAR(50) NOT NULL,
+    provider VARCHAR(50) NOT NULL,
+    provider_payment_id VARCHAR(100),
+    provider_trx_id VARCHAR(100),
+    status VARCHAR(20) NOT NULL DEFAULT 'initiated', -- initiated | verified | failed
+    created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+CREATE INDEX IF NOT EXISTS idx_payments_user ON payments(user_id);
+CREATE INDEX IF NOT EXISTS idx_payments_trx ON payments(provider_trx_id);
 
 -- ২. আইনজীবীদের ক্লায়েন্ট টেবিল [১৬৪]
 CREATE TABLE IF NOT EXISTS clients (

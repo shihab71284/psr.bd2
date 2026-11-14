@@ -6,6 +6,7 @@ import { updateReturnStatus } from "@/app/actions";
 import { IncomeTaxResult, RISK_BADGE_CLASSES, RISK_LEVEL_LABELS, AuditIssue } from "@/lib/taxEngine";
 import ReturnIssuesFilterList from "@/components/ReturnIssuesFilterList";
 import AuditRiskHelpSection from "@/components/AuditRiskHelpSection";
+import { getChamberPlan } from "@/lib/subscription";
 
 export const dynamic = "force-dynamic";
 
@@ -40,6 +41,7 @@ export default async function ReturnDetailPage({ params }: { params: Promise<{ i
   const ret = await getReturnById(id);
   if (!ret) notFound();
   const client = await getClientById(ret.clientId);
+  const chamber = await getChamberPlan();
 
   const calc = ret.calculation as unknown as IncomeTaxResult;
   const issues = (ret.auditIssues as unknown as AuditIssue[]) ?? [];
@@ -148,6 +150,7 @@ export default async function ReturnDetailPage({ params }: { params: Promise<{ i
         returnId={ret.id}
         initialScore={Number(ret.auditRiskScore) || 0}
         initialLevel={ret.auditRiskLevel}
+        isPro={chamber.isPro}
       />
 
       {/* Help & Tips: NBR Audit Risk Category Guide */}

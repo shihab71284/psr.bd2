@@ -1,6 +1,9 @@
 import Link from "next/link";
 import { listClients } from "@/lib/queries";
 import { CATEGORY_LABELS } from "@/lib/taxEngine";
+import { getChamberPlan } from "@/lib/subscription";
+import { FREE_MAX_CLIENTS } from "@/lib/plans";
+import UpgradeBanner from "@/components/UpgradeBanner";
 
 export const dynamic = "force-dynamic";
 
@@ -12,19 +15,41 @@ const CLIENT_TYPE_LABELS: Record<string, string> = {
 };
 
 export default async function ClientsPage() {
-  const clients = await listClients();
+  const [clients, chamber] = await Promise.all([listClients(), getChamberPlan()]);
+  const atLimit = !chamber.isPro && clients.length >= FREE_MAX_CLIENTS;
 
   return (
     <div className="space-y-6">
       <div className="flex flex-wrap items-center justify-between gap-4">
         <div>
           <h1 className="text-2xl font-semibold text-slate-900">ক্লায়েন্ট ব্যবস্থাপনা</h1>
-          <p className="mt-1 text-sm text-slate-500">সকল ক্লায়েন্ট প্রোফাইল এখানে দেখুন ও পরিচালনা করুন।</p>
+          <p className="mt-1 text-sm text-slate-500">
+            সকল ক্লায়েন্ট প্রোফাইল এখানে দেখুন ও পরিচালনা করুন।
+            {!chamber.isPro && (
+              <span className="ml-2 rounded-full bg-slate-100 px-2 py-0.5 text-xs font-semibold text-slate-600">
+                {clients.length} / {FREE_MAX_CLIENTS} ফ্রি সীমা
+              </span>
+            )}
+          </p>
         </div>
-        <Link href="/clients/new" className="rounded-lg bg-emerald-700 px-4 py-2 text-sm font-semibold text-white shadow hover:bg-emerald-800">
-          + নতুন ক্লায়েন্ট
-        </Link>
+        {atLimit ? (
+          <Link href="/pricing" className="rounded-lg bg-slate-900 px-4 py-2 text-sm font-semibold text-white shadow hover:bg-emerald-700">
+            👑 Pro নিন — আনলিমিটেড ক্লায়েন্ট
+          </Link>
+        ) : (
+          <Link href="/clients/new" className="rounded-lg bg-emerald-700 px-4 py-2 text-sm font-semibold text-white shadow hover:bg-emerald-800">
+            + নতুন ক্লায়েন্ট
+          </Link>
+        )}
       </div>
+
+      {atLimit && (
+        <UpgradeBanner
+          title="ফ্রি সীমা পূর্ণ হয়েছে"
+          message={`ফ্রি প্ল্যানে সর্বোচ্চ ${FREE_MAX_CLIENTS} জন ক্লায়েন্ট রাখা যায়। আরও ক্লায়েন্ট যুক্ত করতে Pro-তে আপগ্রেড করুন।`}
+          compact
+        />
+      )}
 
       <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
         {clients.length === 0 ? (

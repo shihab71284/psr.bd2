@@ -862,6 +862,8 @@ function getInitialSeedData() {
       name: string | null;
       createdAt: Date;
     }>,
+    subscriptions: [] as Array<Record<string, unknown>>,
+    payments: [] as Array<Record<string, unknown>>,
   };
 }
 
@@ -881,6 +883,8 @@ export function getStore() {
   if (!s.giftRecords) s.giftRecords = defaults.giftRecords;
   if (!s.blogPosts || s.blogPosts.length < defaults.blogPosts.length) s.blogPosts = defaults.blogPosts;
   if (!s.newsletterSubscribers) s.newsletterSubscribers = defaults.newsletterSubscribers;
+  if (!s.subscriptions) s.subscriptions = defaults.subscriptions;
+  if (!s.payments) s.payments = defaults.payments;
   return s;
 }
 
@@ -915,6 +919,10 @@ function resolveTable(table: any): keyof ReturnType<typeof getInitialSeedData> {
     case "newsletter_subscribers":
     case "newsletterSubscribers":
       return "newsletterSubscribers";
+    case "subscriptions":
+      return "subscriptions";
+    case "payments":
+      return "payments";
     default:
       return "clients";
   }
@@ -1108,8 +1116,13 @@ export function createMockDb() {
             const inserted: any[] = [];
 
             for (const item of items) {
+              // সংখ্যাসূচক id-র টেবিলে (যেমন lawyers: serial) পরের সংখ্যা দেওয়া হয়,
+              // যাতে mock-ও real DB-র মতো আচরণ করে; বাকিগুলোয় gen- id।
+              const numericIds = list.every((r) => typeof r.id === "number");
+              const nextNumericId =
+                numericIds && list.length > 0 ? Math.max(...list.map((r) => r.id as number)) + 1 : 1;
               const newRow = {
-                id: item.id || `gen-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`,
+                id: item.id ?? (numericIds ? nextNumericId : `gen-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`),
                 createdAt: new Date(),
                 updatedAt: new Date(),
                 ...item,
