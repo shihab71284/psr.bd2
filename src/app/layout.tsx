@@ -29,7 +29,7 @@ const jsonLd = {
   "@type": "Organization",
   name: "psr.bd",
   url: "https://psr.bd/",
-  telephone: "+8801917179881",
+  telephone: "+8801578367800",
   founder: { "@type": "Person", name: "S M Sihabul Islam" },
   address: {
     "@type": "PostalAddress",
