@@ -1,0 +1,27 @@
+# psr.bd (BTCP — Bangladesh Tax Compliance Platform)
+
+> Bangladesh tax compliance platform for tax lawyers and chambers: PSR (Proof of Submission of Return) preparation, Section 104 audit shield checks, Section 166 books tracking, client and return management, and deadline tracking under the Income Tax Act 2023.
+
+## Key pages
+
+- Home: https://psr.bd/
+- Pricing (Free and Pro plans): https://psr.bd/pricing
+- Calculators: https://psr.bd/calculators
+- Knowledge base: https://psr.bd/knowledge-base
+- Login: https://psr.bd/login
+
+## What psr.bd does
+
+- Client management for tax chambers (Free plan: first 5 clients; Pro plan: unlimited)
+- Tax return management (Free plan: first 5 draft returns; Pro plan: unlimited)
+- Deadline tracking (general annual deadline calendar on Free; per-client deadlines on Pro)
+- Free audit risk simulator for the Section 104 audit shield (15% income-growth self-assessment protection)
+- PSR (Proof of Submission of Return, Section 264) preparation support
+- Section 166 books-of-accounts and voucher gap/risk identification
+- Free calculators, blog, knowledge base and checklists
+
+## Contact
+
+- Address: 114, Alkaran, GPO, Kotowali, Chittagong, 4000
+- Phone: +8801578-367800
+- Website: https://psr.bd/
