@@ -1,11 +1,16 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import type { ReactNode } from "react";
 import Script from "next/script";
 import "./globals.css";
 import WhatsAppButton from "../components/WhatsAppButton";
 
+export const viewport: Viewport = {
+  themeColor: "#059669",
+};
+
 export const metadata: Metadata = {
   metadataBase: new URL("https://psr.bd"),
+  manifest: "/manifest.webmanifest",
   title: "BTCP | Bangladesh Tax Compliance Platform",
   description: "কর আইনজীবী, ডেভেলপার ও ক্লায়েন্টদের জন্য psr.bd - সমন্বিত আয়কর আইন ২০২৩ ও পিএসআর (Proof of Submission of Return) অডিট কমপ্লায়েন্স প্ল্যাটফর্ম, উন্মুক্ত ব্লগ ও অডিট রিস্ক চেকার।",
   alternates: {
@@ -14,7 +19,7 @@ export const metadata: Metadata = {
   icons: {
     icon: "/favicon.svg",
     shortcut: "/favicon.svg",
-    apple: "/logo.svg",
+    apple: "/icon-192.png",
   },
   openGraph: {
     title: "BTCP | Bangladesh Tax Compliance Platform",
@@ -272,6 +277,9 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         />
         <Script id="google-analytics" strategy="afterInteractive">
           {`window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag("js", new Date()); gtag("config", "G-7R4Z3777T7");`}
+        </Script>
+        <Script id="sw-register" strategy="afterInteractive">
+          {`if ('serviceWorker' in navigator) { window.addEventListener('load', () => navigator.serviceWorker.register('/sw.js')); }`}
         </Script>
       </head>
       <body className="bg-slate-50/70 text-slate-900 antialiased selection:bg-emerald-100 selection:text-emerald-900">{children}<WhatsAppButton /></body>
