@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import Script from "next/script";
 import "./globals.css";
+import WhatsAppButton from "../components/WhatsAppButton";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://psr.bd"),
@@ -273,7 +274,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           {`window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag("js", new Date()); gtag("config", "G-7R4Z3777T7");`}
         </Script>
       </head>
-      <body className="bg-slate-50/70 text-slate-900 antialiased selection:bg-emerald-100 selection:text-emerald-900">{children}</body>
+      <body className="bg-slate-50/70 text-slate-900 antialiased selection:bg-emerald-100 selection:text-emerald-900">{children}<WhatsAppButton /></body>
     </html>
   );
 }
