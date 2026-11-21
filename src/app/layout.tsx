@@ -3,6 +3,7 @@ import type { ReactNode } from "react";
 import Script from "next/script";
 import "./globals.css";
 import WhatsAppButton from "../components/WhatsAppButton";
+import ChatAssistant from "../components/ChatAssistant";
 
 export const viewport: Viewport = {
   themeColor: "#059669",
@@ -282,7 +283,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           {`if ('serviceWorker' in navigator) { window.addEventListener('load', () => navigator.serviceWorker.register('/sw.js')); }`}
         </Script>
       </head>
-      <body className="bg-slate-50/70 text-slate-900 antialiased selection:bg-emerald-100 selection:text-emerald-900">{children}<WhatsAppButton /></body>
+      <body className="bg-slate-50/70 text-slate-900 antialiased selection:bg-emerald-100 selection:text-emerald-900">{children}<WhatsAppButton /><ChatAssistant /></body>
     </html>
   );
 }
