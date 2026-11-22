@@ -12,8 +12,19 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   metadataBase: new URL("https://psr.bd"),
   manifest: "/manifest.webmanifest",
-  title: "BTCP | Bangladesh Tax Compliance Platform",
+  title: "BTCP | Bangladesh Tax Compliance Platform — PSR.BD",
   description: "কর আইনজীবী, ডেভেলপার ও ক্লায়েন্টদের জন্য psr.bd - সমন্বিত আয়কর আইন ২০২৩ ও পিএসআর (Proof of Submission of Return) অডিট কমপ্লায়েন্স প্ল্যাটফর্ম, উন্মুক্ত ব্লগ ও অডিট রিস্ক চেকার।",
+  keywords: [
+    "পিএসআর সনদ",
+    "PSR Bangladesh",
+    "আয়কর আইন ২০২৩",
+    "ট্যাক্স কমপ্লায়েন্স প্ল্যাটফর্ম",
+    "কর আইনজীবী চট্টগ্রাম",
+    "ধারা ২৬৪ পিএসআর",
+    "ধারা ১০৪ অডিট শিল্ড",
+    "btcp bd",
+    "psr.bd"
+  ],
   alternates: {
     canonical: "/",
   },
@@ -23,11 +34,26 @@ export const metadata: Metadata = {
     apple: "/icon-192.png",
   },
   openGraph: {
-    title: "BTCP | Bangladesh Tax Compliance Platform",
+    title: "BTCP | Bangladesh Tax Compliance Platform — PSR.BD",
     description: "কর আইনজীবী, ডেভেলপার ও ক্লায়েন্টদের জন্য psr.bd - সমন্বিত আয়কর আইন ২০২৩ ও পিএসআর (Proof of Submission of Return) অডিট কমপ্লায়েন্স প্ল্যাটফর্ম, উন্মুক্ত ব্লগ ও অডিট রিস্ক চেকার।",
     locale: "bn_BD",
     type: "website",
     url: "https://psr.bd",
+    siteName: "BTCP — PSR.BD",
+    images: [
+      {
+        url: "https://psr.bd/og-image.svg",
+        width: 1200,
+        height: 630,
+        alt: "BTCP Bangladesh Tax Compliance Platform",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "BTCP | Bangladesh Tax Compliance Platform — PSR.BD",
+    description: "কর আইনজীবী, ডেভেলপার ও ক্লায়েন্টদের জন্য psr.bd - সমন্বিত আয়কর আইন ২০২৩ ও পিএসআর অডিট কমপ্লায়েন্স প্ল্যাটফর্ম।",
+    images: ["https://psr.bd/og-image.svg"],
   },
 };
 
@@ -125,7 +151,7 @@ const faqJsonLd = {
     {
       "@type": "Question",
       inLanguage: "en",
-      name: "What is the Section 104 audit shield and how can I check it on psr.bd?",
+      name: "What is the Section 104 audit shield and how can I check it on psr.bd? ",
       acceptedAnswer: {
         "@type": "Answer",
         inLanguage: "en",
