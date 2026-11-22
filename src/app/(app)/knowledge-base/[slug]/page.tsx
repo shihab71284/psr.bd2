@@ -1,6 +1,46 @@
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { KNOWLEDGE_ARTICLES } from "@/lib/content";
+
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const { slug } = await params;
+  const article = KNOWLEDGE_ARTICLES.find((a) => a.slug === slug);
+  if (!article) return { title: "নিবন্ধ পাওয়া যায়নি | BTCP" };
+
+  return {
+    title: `${article.titleBn} | BTCP — PSR.BD`,
+    description: article.summaryBn,
+    keywords: [
+      article.titleBn,
+      article.categoryBn,
+      "আয়কর আইন ২০২৩",
+      "পিএসআর সনদ",
+      "ট্যাক্স কমপ্লায়েন্স",
+      "psr.bd"
+    ],
+    openGraph: {
+      title: `${article.titleBn} | BTCP — PSR.BD`,
+      description: article.summaryBn,
+      url: `https://psr.bd/knowledge-base/${article.slug}`,
+      siteName: "BTCP — PSR.BD",
+      images: [
+        {
+          url: "https://psr.bd/og-image.svg",
+          width: 1200,
+          height: 630,
+          alt: article.titleBn,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${article.titleBn} | BTCP — PSR.BD`,
+      description: article.summaryBn,
+      images: ["https://psr.bd/og-image.svg"],
+    },
+  };
+}
 
 export default async function ArticlePage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
