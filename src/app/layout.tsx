@@ -13,7 +13,7 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://psr.bd"),
   manifest: "/manifest.webmanifest",
   title: "BTCP | Bangladesh Tax Compliance Platform — PSR.BD",
-  description: "কর আইনজীবী, ডেভেলপার ও ক্লায়েন্টদের জন্য psr.bd - সমন্বিত আয়কর আইন ২০২৩ ও পিএসআর (Proof of Submission of Return) অডিট কমপ্লায়েন্স প্ল্যাটফর্ম, উন্মুক্ত ব্লগ ও অডিট রিস্ক চেকার।",
+  description: "কর আইনজীবী, ডেভেলপার ও ক্লায়েন্টদের জন্য psr.bd - সমন্বিত আয়কর আইন ২০২৩ ও পিএসআর (Proof of Submission of Return) অডিট কমপ্লায়েন্স প্ল্যাটফর্ম, চট্টগ্রাম চেম্বার ও অডিট রিস্ক চেকার।",
   keywords: [
     "পিএসআর সনদ",
     "PSR Bangladesh",
@@ -59,19 +59,117 @@ export const metadata: Metadata = {
 
 const jsonLd = {
   "@context": "https://schema.org",
-  "@type": "Organization",
-  name: "psr.bd",
+  "@type": [
+    "LocalBusiness",
+    "LegalService",
+    "TaxConsultant"
+  ],
+  "@id": "https://psr.bd/#localbusiness",
+  name: "BTCP — Bangladesh Tax Compliance Platform (PSR.BD)",
+  alternateName: [
+    "BTCP",
+    "PSR.BD"
+  ],
+  description: "Specialized tax legal and compliance chamber in Chittagong at 114, Alkaran, GPO, Kotowali. Authoritative legal consultation for Section 264 Proof of Submission of Return (PSR) certification across 43 services, Section 104 Audit Shield simulations (15% growth audit protection), Section 166 books-of-accounts and cash loan compliance, and chamber management.",
   url: "https://psr.bd/",
+  logo: "https://psr.bd/favicon.svg",
+  image: "https://psr.bd/og-image.svg",
   telephone: "+8801578367800",
-  founder: { "@type": "Person", name: "S M Sihabul Islam" },
+  email: "support@psr.bd",
+  priceRange": "$$",
+  currenciesAccepted: "BDT",
+  paymentAccepted: "Cash, Bank Transfer, bKash, Nagad",
+  founder: {
+    "@type": "Person",
+    name: "S M Sihabul Islam"
+  },
   address: {
     "@type": "PostalAddress",
     streetAddress: "114, Alkaran, GPO, Kotowali",
     addressLocality: "Chittagong",
+    addressRegion": "Chittagong Division",
     postalCode: "4000",
-    addressCountry: "BD",
+    addressCountry": "BD"
   },
-  sameAs: ["https://github.com/shihab71284"],
+  geo: {
+    "@type": "GeoCoordinates",
+    latitude: 22.3353,
+    longitude: 91.8340
+  },
+  openingHoursSpecification: [
+    {
+      "@type": "OpeningHoursSpecification",
+      dayOfWeek: [
+        "Saturday",
+        "Sunday",
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday"
+      ],
+      opens: "09:30",
+      closes: "19:30"
+    }
+  ],
+  areaServed: [
+    {
+      "@type": "AdministrativeArea",
+      name: "Chittagong"
+    },
+    {
+      "@type": "Country",
+      name: "Bangladesh"
+    }
+  ],
+  sameAs: [
+    "https://github.com/shihab71284"
+  ],
+  hasOfferCatalog: {
+    "@type": "OfferCatalog",
+    name: "Tax Compliance & Legal Services Catalog",
+    itemListElement: [
+      {
+        "@type": "Offer",
+        itemOffered: {
+          "@type": "Service",
+          name: "Section 264 PSR (Proof of Submission of Return) Certification Support",
+          description: "Verification, documentation, and issuance assistance for Proof of Submission of Return (PSR) mandated for 43 statutory economic services under Section 264 of the Income Tax Act 2023."
+        }
+      },
+      {
+        "@type": "Offer",
+        itemOffered: {
+          "@type": "Service",
+          name: "Section 104 Audit Shield & Tax Growth Protection Verification",
+          description: "Simulation and quantitative validation of the 15% year-over-year income growth benchmark providing statutory protection against return audit under Section 104."
+        }
+      },
+      {
+        "@type": "Offer",
+        itemOffered: {
+          "@type": "Service",
+          name: "Section 166 Books-of-Accounts & Cash Loan Audit Compliance Check",
+          description: "Auditing accounting ledgers, cash transactions, and informal borrowings exceeding BDT 5,00,000 against Section 166 statutory restrictions to prevent disallowance."
+        }
+      },
+      {
+        "@type": "Offer",
+        itemOffered: {
+          "@type": "Service",
+          name: "Tax Lawyer Chamber Dashboard & Client Return Tracking",
+          description: "Practice management platform for tax practitioners and lawyers to track client e-TINs, draft return progress, and compliance deadlines across Chittagong tax circles."
+        }
+      },
+      {
+        "@type": "Offer",
+        itemOffered: {
+          "@type": "Service",
+          name: "Income Tax Act 2023 Statutory Compliance & Filing",
+          description: "Statutory legal interpretation, rectification applications under Section 212, and formal representations before Taxes Zone Chittagong circles and appellate bodies."
+        }
+      }
+    ]
+  }
 };
 
 const faqJsonLd = {
@@ -265,7 +363,7 @@ const faqJsonLd = {
       acceptedAnswer: {
         "@type": "Answer",
         inLanguage: "bn",
-        text: "ঠিকানা: 114, Alkaran, GPO, Kotowali, Chittagong, 4000। ফোন: +8801578-367800। ওয়েবসাইট: https://psr.bd/",
+        text: "ঠিকানা: ১১৪, আলকরণ, জিপিও, কোতোয়ালি, চট্টগ্রাম - ৪০০০, বাংলাদেশ। ফোন: +৮৮০১৫৭৮৩৬৭৮০০, +৮৮০১৯১৭১৭৯৮৮১। ওয়েবসাইট: https://psr.bd/",
       },
     },
     {
@@ -275,7 +373,7 @@ const faqJsonLd = {
       acceptedAnswer: {
         "@type": "Answer",
         inLanguage: "en",
-        text: "Address: 114, Alkaran, GPO, Kotowali, Chittagong, 4000. Phone: +8801578-367800. Website: https://psr.bd/",
+        text: "Address: 114, Alkaran, GPO, Kotowali, Chittagong, 4000, Bangladesh. Phone: +8801578367800, +8801917179881. Website: https://psr.bd/",
       },
     },
   ],
