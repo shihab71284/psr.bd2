@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0a192f" />
+      <stop offset="50%" stop-color="#0f2942" />
+      <stop offset="100%" stop-color="#05101e" />
+    </linearGradient>
+    <linearGradient id="gold" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#38bdf8" />
+      <stop offset="50%" stop-color="#818cf8" />
+      <stop offset="100%" stop-color="#c084fc" />
+    </linearGradient>
+  </defs>
+  
+  <rect width="1200" height="630" fill="url(#bg)" />
+  
+  <circle cx="1020" cy="160" r="280" fill="#38bdf8" opacity="0.08" />
+  <circle cx="180" cy="490" r="240" fill="#818cf8" opacity="0.08" />
+  
+  <rect x="80" y="80" width="310" height="56" rx="28" fill="#1e3a5f" stroke="#38bdf8" stroke-width="2" />
+  <circle cx="110" cy="108" r="10" fill="#38bdf8" />
+  <text x="135" y="115" font-family="'Segoe UI', system-ui, sans-serif" font-size="20" font-weight="700" fill="#f8fafc">BTCP — PSR.BD</text>
+  
+  <text x="80" y="240" font-family="'Segoe UI', sans-serif" font-size="52" font-weight="800" fill="#ffffff" letter-spacing="-1">
+    বাংলাদেশ ট্যাক্স কমপ্লায়েন্স প্ল্যাটফর্ম
+  </text>
+  <text x="80" y="315" font-family="'Segoe UI', sans-serif" font-size="48" font-weight="800" fill="url(#gold)">
+    ট্যাক্স ল'ইয়ার, অডিট ও পিএসআর পোর্টাল
+  </text>
+  
+  <text x="80" y="385" font-family="'Segoe UI', sans-serif" font-size="24" fill="#94a3b8">
+    • আয়কর আইন ২০২৩ সমন্বিত স্বয়ংক্রিয় কমপ্লায়েন্স চেকার
+  </text>
+  <text x="80" y="425" font-family="'Segoe UI', sans-serif" font-size="24" fill="#94a3b8">
+    • পিএসআর (PSR) সনদ যাচাই ও ক্লায়েন্ট রিটার্ন ফাইল ম্যানেজমেন্ট
+  </text>
+  <text x="80" y="465" font-family="'Segoe UI', sans-serif" font-size="24" fill="#94a3b8">
+    • ট্যাক্স নলেজ বেস, ডেডলাইন ট্র্যাকার ও এআই ড্রাফটিং টুল
+  </text>
+  
+  <line x1="80" y1="520" x2="1120" y2="520" stroke="#1e3a5f" stroke-width="2" />
+  
+  <text x="80" y="565" font-family="system-ui, sans-serif" font-size="22" font-weight="600" fill="#38bdf8">
+    🌐 https://psr.bd
+  </text>
+  <text x="680" y="565" font-family="system-ui, sans-serif" font-size="20" fill="#64748b">
+    আইনজীবী ও পেশাদার করদাতাদের ডিজিটাল সমাধান
+  </text>
+</svg>
