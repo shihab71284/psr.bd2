@@ -76,7 +76,7 @@ const jsonLd = {
   image: "https://psr.bd/og-image.svg",
   telephone: "+8801578367800",
   email: "support@psr.bd",
-  priceRange": "$$",
+  "priceRange": "$$",
   currenciesAccepted: "BDT",
   paymentAccepted: "Cash, Bank Transfer, bKash, Nagad",
   founder: {
@@ -87,9 +87,9 @@ const jsonLd = {
     "@type": "PostalAddress",
     streetAddress: "114, Alkaran, GPO, Kotowali",
     addressLocality: "Chittagong",
-    addressRegion": "Chittagong Division",
+    "addressRegion": "Chittagong Division",
     postalCode: "4000",
-    addressCountry": "BD"
+    "addressCountry": "BD"
   },
   geo: {
     "@type": "GeoCoordinates",

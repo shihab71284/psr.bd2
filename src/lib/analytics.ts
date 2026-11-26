@@ -3,20 +3,27 @@
  * Measurement ID: G-7R4Z3777T7
  */
 
-declare global {
-  interface Window {
-    dataLayer: any[];
-    gtag?: (...args: any[]) => void;
-  }
+type GTagParamValue = string | number | boolean;
+type GTagEventParams = Record<string, GTagParamValue>;
+
+interface AnalyticsWindow {
+  gtag?: (
+    command: 'event',
+    eventName: string,
+    eventParams?: Record<string, unknown>
+  ) => void;
 }
 
-export function trackEvent(name: string, params: Record<string, string | number | boolean> = {}): void {
+export function trackEvent(name: string, params: GTagEventParams = {}): void {
   try {
-    if (typeof window !== 'undefined' && typeof window.gtag === 'function') {
-      window.gtag('event', name, params);
+    if (typeof window !== 'undefined') {
+      const win = window as unknown as AnalyticsWindow;
+      if (typeof win.gtag === 'function') {
+        win.gtag('event', name, params);
+      }
     }
-  } catch (err) {
-    console.debug('[Analytics] Skipped:', name);
+  } catch {
+    // Graceful fallback when GA4 is blocked or unavailable
   }
 }
 
